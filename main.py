@@ -25,15 +25,12 @@ y_pred_manual = predict(X_test_bias, ml.manual_weights)
 # Calculate Mean Squared Error for the manually set weights
 mse_manual = mean_squared_error(y_test, y_pred_manual)
 
-result = ml.mse_manual
-weights = ml.manual_weights
-
 output = Path("/home/matthew.t/ml_results.txt")
 output_all = Path("/home/matthew.t/all_results.npy")
 
 # log output to be grabbed by Artemis
 with open(output, 'a') as f:
-    f.write(f"Weights: {weights}; MSE: {result}\n")
+    f.write(f"Weights: {ml.manual_weights}; MSE: {mse_manual}\n")
 full_output = output.read_text()
 print(full_output)
 
@@ -44,7 +41,7 @@ else:
     all_results = {}
     all_results["weights"] = []
     all_results["mses"]= []
-all_results["weights"].append(weights)
-all_results["mses"].append(result)
+all_results["weights"].append(ml.manual_weights)
+all_results["mses"].append(mse_manual)
 with open(output_all, "wb") as f:
     np.save(f, all_results)
